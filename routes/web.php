@@ -1,8 +1,9 @@
 <?php
 
+
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,10 +17,19 @@ use App\Http\Controllers\ProductController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    $products = \App\Models\Product::query()->latest('id')->limit(4)->get();
+
+    return view('welcome', compact('products'));
+})->name('welcome');
+
+//Auth::routes();
+
+Route::get('auth/login', [LoginController::class, 'showFormLogin'])->name('login');
+Route::post('auth/login', [LoginController::class, 'login']);
+
+Route::get('auth/logout', [LoginController::class, 'logout'])->name('logout');
+
+Route::get('auth/register', [RegisterController::class, 'showFormRegister'])->name('register');
+Route::post('auth/register', [RegisterController::class, 'register']);
 
 
-
-Route::resource('categories',   CategoryController::class);
-Route::resource('products', ProductController::class);

@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('catalogues', function (Blueprint $table) {
+        Schema::create('product_tag', function (Blueprint $table) {
             $table->foreignIdFor(\App\Models\Product::class)->constrained();
-            $table->string('name');
-            $table->string('cover')->nullable();
-            $table->boolean('is_active')->default(true);
-            $table->timestamps();
+            $table->foreignIdFor(\App\Models\Tag::class)->constrained();
+
+            $table->primary(['product_id', 'tag_id']);
         });
     }
 
@@ -25,6 +24,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('catalogues');
+        Schema::dropIfExists('product_tag');
     }
+
 };

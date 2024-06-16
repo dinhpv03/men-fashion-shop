@@ -12,10 +12,20 @@ class Catalogue extends Model
     protected $fillable = [
         'name',
         'cover',
-        'is_active'
+        'is_active',
     ];
 
     protected $casts = [
         'is_active' => 'boolean',
     ];
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
+
+    public function product()
+    {
+        return $this->hasOne(Product::class);
+    }
 }

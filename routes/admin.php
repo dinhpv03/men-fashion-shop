@@ -1,16 +1,17 @@
 <?php
 
 use App\Http\Controllers\Admin\CatalogueController;
+use App\Http\Controllers\Admin\ProductController;
 use Illuminate\Support\Facades\Route;
-
 
 Route::prefix('admin')
     ->as('admin.')
+//    ->middleware(['auth', 'isAdmin'])
     ->group(function () {
 
         Route::get('/', function () {
-            return 'Đây là trang Dashboard!';
-        });
+            return view('admin.dashboard');
+        })->name('dashboard');
 
         Route::prefix('catalogues')
             ->as('catalogues.')
@@ -21,7 +22,8 @@ Route::prefix('admin')
                 Route::get('show/{id}',         [CatalogueController::class, 'show'])->name('show');
                 Route::get('{id}/edit',         [CatalogueController::class, 'edit'])->name('edit');
                 Route::put('{id}/update',       [CatalogueController::class, 'update'])->name('update');
-                Route::get('{id}/destroy',   [CatalogueController::class, 'destroy'])->name('destroy');
-
+                Route::get('{id}/destroy',      [CatalogueController::class, 'destroy'])->name('destroy');
             });
+
+        Route::resource('products', ProductController::class);
     });
