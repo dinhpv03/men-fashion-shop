@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('catalogues', function (Blueprint $table) {
-            $table->foreignIdFor(\App\Models\Product::class)->constrained();
-            $table->string('name');
-            $table->string('cover')->nullable();
-            $table->boolean('is_active')->default(true);
-            $table->timestamps();
+        Schema::table('products', function (Blueprint $table) {
+            //
         });
     }
 
@@ -25,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('catalogues');
+        Schema::table('products', function (Blueprint $table) {
+            //
+        });
     }
 };

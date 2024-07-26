@@ -1,8 +1,6 @@
 @extends('admin.layouts.master')
 
-@section('title')
-    Danh sách Sản phẩm
-@endsection
+@section('title', 'Danh sách Sản phẩm')
 
 @section('content')
     <!-- start page title -->
@@ -28,92 +26,83 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between">
                     <h5 class="card-title mb-0">Danh sách</h5>
-
                     <a href="{{ route('admin.products.create') }}" class="btn btn-primary mb-3">Thêm mới</a>
                 </div>
                 <div class="card-body">
-                    <table id="example"
-                           class="table table-bordered dt-responsive nowrap table-striped align-middle"
-                           style="width:100%">
-
-                        <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Img Thumbnail</th>
-                            <th>Name</th>
-                            <th>SKU</th>
-                            <th>Catelogues</th>
-                            <th>Price Regular</th>
-                            <th>Price Sale</th>
-                            <th>Views</th>
-                            <th>Is Active</th>
-                            <th>Is Hot Deal</th>
-                            <th>Is Good Deal</th>
-                            <th>Is New</th>
-                            <th>Is Show Home</th>
-                            <th>Tags</th>
-                            <th>Created at</th>
-                            <th>Updated at</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-
-                        <tbody>
-                        @foreach($data as $item)
+                    <div class="table-responsive">
+                        <table id="example" class="table table-bordered dt-responsive nowrap table-striped align-middle" style="width:100%">
+                            <thead>
                             <tr>
-                                <td>{{ $item->id }}</td>
-                                <td>
-                                    @php
-                                        $url = $item->img_thumbnail;
-
-                                        if(! \Str::contains($url, 'http')) {
-                                            $url = \Illuminate\Support\Facades\Storage::url($url);
-                                        }
-                                    @endphp
-
-                                    <img src="{{ $url }}" alt="" width="100px">
-                                </td>
-                                <td>{{ $item->name }}</td>
-                                <td>{{ $item->sku }}</td>
-                                <td>{{ $item->catelogue->name }}</td>
-                                <td>{{ $item->price_regular }}</td>
-                                <td>{{ $item->price_sale }}</td>
-                                <td>{{ $item->views }}</td>
-                                <td>{!! $item->is_active ? '<span class="badge bg-primary">YES</span>'
-                                                                : '<span class="badge bg-danger">NO</span>' !!}</td>
-                                <td>{!! $item->is_hot_deal ? '<span class="badge bg-primary">YES</span>'
-                                                                : '<span class="badge bg-danger">NO</span>' !!}</td>
-                                <td>{!! $item->is_good_deal ? '<span class="badge bg-primary">YES</span>'
-                                                                : '<span class="badge bg-danger">NO</span>' !!}</td>
-                                <td>{!! $item->is_new ? '<span class="badge bg-primary">YES</span>'
-                                                                : '<span class="badge bg-danger">NO</span>' !!}</td>
-                                <td>{!! $item->is_show_home ? '<span class="badge bg-primary">YES</span>'
-                                                                : '<span class="badge bg-danger">NO</span>' !!}</td>
-                                <td>
-                                    @foreach($item->tags as $tag)
-                                        <span class="badge bg-info">{{ $tag->name }}</span>
-                                    @endforeach
-                                </td>
-                                <td>{{ $item->created_at }}</td>
-                                <td>{{ $item->updated_at }}</td>
-                                <td>
-                                    <form action="{{ route('admin.products.destroy', $item) }}" method="post">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button
-                                            onclick="return confirm('Chắc chắn không?')"
-                                            type="submit" class="btn btn-danger">DELETE</button>
-                                    </form>
-                                </td>
+                                <th>ID</th>
+                                <th>Img Thumbnail</th>
+                                <th>Name</th>
+                                <th>SKU</th>
+                                <th>Catalogue</th>
+                                <th>Price Regular</th>
+                                <th>Price Sale</th>
+                                <th>Views</th>
+                                <th>Is Active</th>
+                                <th>Is Hot Deal</th>
+                                <th>Is Good Deal</th>
+                                <th>Is New</th>
+                                <th>Is Show Home</th>
+                                <th>Tags</th>
+                                <th>Created at</th>
+                                <th>Updated at</th>
+                                <th>Action</th>
                             </tr>
-                        @endforeach
-                        </tbody>
-
-                    </table>
+                            </thead>
+                            <tbody>
+                            @foreach($data as $item)
+                                <tr>
+                                    <td>{{ $item->id }}</td>
+                                    <td>
+                                        @php
+                                            $url = $item->img_thumbnail;
+                                            if (!Str::contains($url, 'http')) {
+                                                $url = Storage::url($url);
+                                            }
+                                        @endphp
+                                        <img src="{{ $url }}" alt="" width="100px">
+                                    </td>
+                                    <td>{{ $item->name }}</td>
+                                    <td>{{ $item->sku }}</td>
+                                    <td>{{ $item->catalogue ? $item->catalogue->name : 'No Catalogue' }}</td>
+                                    <td>{{ $item->price_regular }}</td>
+                                    <td>{{ $item->price_sale }}</td>
+                                    <td>{{ $item->views }}</td>
+                                    <td>{!! $item->is_active ? '<span class="badge bg-primary">YES</span>' : '<span class="badge bg-danger">NO</span>' !!}</td>
+                                    <td>{!! $item->is_hot_deal ? '<span class="badge bg-primary">YES</span>' : '<span class="badge bg-danger">NO</span>' !!}</td>
+                                    <td>{!! $item->is_good_deal ? '<span class="badge bg-primary">YES</span>' : '<span class="badge bg-danger">NO</span>' !!}</td>
+                                    <td>{!! $item->is_new ? '<span class="badge bg-primary">YES</span>' : '<span class="badge bg-danger">NO</span>' !!}</td>
+                                    <td>{!! $item->is_show_home ? '<span class="badge bg-primary">YES</span>' : '<span class="badge bg-danger">NO</span>' !!}</td>
+                                    <td>
+                                        @foreach($item->tags as $tag)
+                                            <span class="badge bg-info">{{ $tag->name }}</span>
+                                        @endforeach
+                                    </td>
+                                    <td>{{ $item->created_at }}</td>
+                                    <td>{{ $item->updated_at }}</td>
+                                    <td>
+                                        <div class="d-flex gap-2">
+                                            <a href="{{ route('admin.products.show', $item) }}" class="btn btn-info btn-sm">Show</a>
+                                            <a href="{{ route('admin.products.edit', $item) }}" class="btn btn-primary btn-sm">Edit</a>
+                                            <form action="{{ route('admin.products.destroy', $item) }}" method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button onclick="return confirm('Chắc chắn không?')" type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div><!--end col-->
-    </div>
+        </div>
+    </div><!-- end row -->
 @endsection
 
 @section('style-libs')
@@ -121,8 +110,6 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css"/>
     <!--datatable responsive css-->
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap.min.css"/>
-
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
 @endsection
 
 @section('script-libs')
@@ -141,8 +128,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 
     <script>
-        new DataTable("#example", {
-            order: [ [0, 'desc'] ] }
-        );
+        $(document).ready(function () {
+            $('#example').DataTable({
+                order: [[0, 'desc']],
+                responsive: true,
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
     </script>
 @endsection

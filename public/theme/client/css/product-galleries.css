@@ -1,0 +1,40 @@
+.product-gallery .main-image {
+    width: 100%;
+    height: 600px; /* Điều chỉnh chiều cao theo ý muốn */
+    overflow: hidden;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.product-gallery .main-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.product-gallery .thumbnail-container {
+    margin-top: 10px;
+}
+
+.product-gallery .thumbnail-item {
+    width: 80px; /* Điều chỉnh kích thước theo ý muốn */
+    height: 80px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+}
+
+.product-gallery .thumbnail-item:hover,
+.product-gallery .thumbnail-item.active {
+    border-color: #007bff;
+}
+
+.product-gallery .thumbnail-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}

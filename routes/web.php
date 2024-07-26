@@ -1,8 +1,10 @@
 <?php
 
 
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProductController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,20 +18,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    $products = \App\Models\Product::query()->latest('id')->limit(4)->get();
-
-    return view('welcome', compact('products'));
-})->name('welcome');
-
-//Auth::routes();
-
-Route::get('auth/login', [LoginController::class, 'showFormLogin'])->name('login');
-Route::post('auth/login', [LoginController::class, 'login']);
-
-Route::get('auth/logout', [LoginController::class, 'logout'])->name('logout');
-
-Route::get('auth/register', [RegisterController::class, 'showFormRegister'])->name('register');
-Route::post('auth/register', [RegisterController::class, 'register']);
 
 
+
+Auth::routes();
+
+Route::get('/',               [HomeController::class, 'index']);
+Route::get('/home',           [HomeController::class, 'index'])->name('home');
+
+
+Route::get('/product/{slug}', [ProductController::class, 'detail'])->name('product.detail');
+
+Route::get('/shop',      [App\Http\Controllers\HomeController::class, 'shop'])->name('shop');
+
+
+Route::get('/cart', [App\Http\Controllers\HomeController::class, 'cart'])->name('cart');
+Route::get('/check-out', [App\Http\Controllers\HomeController::class, 'check_out'])->name('check-out');
+Route::get('/contact', [App\Http\Controllers\HomeController::class, 'contact'])->name('contact');
+
+Route::get('cart/list', [CartController::class, 'list'])->name('cart.list');
+Route::post('cart/add', [CartController::class, 'add'])->name('cart.add');

@@ -52,7 +52,7 @@ class ProductSeeder extends Seeder
             $name = fake()->text('100');
             Product::query()->create([
                 'name' => $name,
-                'catalogue_id' => rand(2,7),
+                'catalogue_id' => rand(1,5),
                 'slug' => Str::slug($name) . '-' . Str::random(8),
                 'sku' => Str::random(8) . $i,
                 'img_thumbnail' => 'https://canifa.com/img/1000/1500/resize/6/t/6to23w001-se215-2.webp',
@@ -93,20 +93,17 @@ class ProductSeeder extends Seeder
             $data = [];
             for ($sizeId = 1; $sizeId < 6; $sizeId++) {
                 for ($colorId = 1; $colorId < 5; $colorId++) {
-                    ProductVariant::query()->create([
-                        $data[] = [
-                            'product_id' => $productId,
-                            'product_size_id' => $sizeId,
-                            'product_color_id' => $colorId,
-                            'quantity' => 100,
-                            'image' => 'https://canifa.com/img/500/750/resize/6/t/6ts23s004-sb138-1-thumb.webp'
-                        ]
-                    ]);
+                    $data[] = [
+                        'product_id' => $productId,
+                        'product_size_id' => $sizeId,
+                        'product_color_id' => $colorId,
+                        'quantity' => 100,
+                        'image' => 'https://canifa.com/img/500/750/resize/6/t/6ts23s004-sb138-1-thumb.webp'
+                    ];
                 }
             }
-            DB::table('product_variants')->insert($data);
+
+            ProductVariant::query()->insert($data);
         }
-
-
     }
 }
