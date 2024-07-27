@@ -76,6 +76,23 @@
                         </ul>
                     </div>
                 </li> <!-- end Dashboard Menu -->
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarLayouts3" data-bs-toggle="collapse" role="button"
+                       aria-controls="sidebarLayouts">
+                        <i class="ri-layout-3-line"></i> <span data-key="t-layouts">Biến thể</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="sidebarLayouts3">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="{{ route('admin.color.index') }}" target="_blank" class="nav-link">Màu sắc
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.size.index') }}" target="_blank" class="nav-link">Kích cỡ</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li> <!-- end Dashboard Menu -->
             </ul>
         </div>
         <!-- Sidebar -->

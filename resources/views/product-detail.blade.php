@@ -47,25 +47,29 @@
                     </div>
                     <div class="d-flex mb-3">
                         <form action="{{ route('cart.add') }}" method="POST">
-                            <input type="hidden" name="product_id" value="{{ $product->id }}">
                             @csrf
+                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+
                             <div class="mb-3">
                                 <strong class="text-dark mr-3">Colors:</strong>
                                 <div class="d-flex flex-wrap">
                                     @foreach($colors as $id => $name)
                                         <div class="custom-control custom-radio custom-control-inline mr-3 mb-2">
-                                            <input type="radio" class="custom-control-input" id="radio_color_{{ $id }}" name="product_color_id" value="{{ $id }}" checked>
-                                            <label class="custom-control-label" for="radio_color_{{ $id }}" >{{ $name }}</label>
+                                            <input type="radio" class="custom-control-input" id="radio_color_{{ $id }}"
+                                                   name="product_color_id" value="{{ $id }}" {{ $loop->first ? 'checked' : '' }} required>
+                                            <label class="custom-control-label" for="radio_color_{{ $id }}">{{ $name }}</label>
                                         </div>
                                     @endforeach
                                 </div>
                             </div>
+
                             <div class="mb-3">
                                 <strong class="text-dark mr-3">Sizes:</strong>
                                 <div class="d-flex flex-wrap">
                                     @foreach($sizes as $id => $name)
                                         <div class="custom-control custom-radio custom-control-inline mr-3 mb-2">
-                                            <input type="radio" class="custom-control-input" id="radio_size_{{ $id }}" name="product_size_id" value="{{ $id }}" checked>
+                                            <input type="radio" class="custom-control-input" id="radio_size_{{ $id }}"
+                                                   name="product_size_id" value="{{ $id }}" {{ $loop->first ? 'checked' : '' }} required>
                                             <label class="custom-control-label" for="radio_size_{{ $id }}">{{ $name }}</label>
                                         </div>
                                     @endforeach
@@ -79,7 +83,8 @@
                                             <i class="fa fa-minus"></i>
                                         </button>
                                     </div>
-                                    <input type="text" class="form-control bg-secondary border-0 text-center" value="1" name="quantity">
+                                    <input type="number" class="form-control bg-secondary border-0 text-center"
+                                           value="1" name="quantity" min="1" max="999" required>
                                     <div class="input-group-btn">
                                         <button class="btn btn-primary btn-plus" type="button">
                                             <i class="fa fa-plus"></i>

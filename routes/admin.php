@@ -1,12 +1,14 @@
 <?php
 
 use App\Http\Controllers\Admin\CatalogueController;
+use App\Http\Controllers\Admin\ProductColorController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\ProductSizeController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')
     ->as('admin.')
-//    ->middleware(['auth', 'isAdmin'])
+    ->middleware(['auth', 'isAdmin'])
     ->group(function () {
 
         Route::get('/', function () {
@@ -26,4 +28,6 @@ Route::prefix('admin')
             });
 
         Route::resource('products', ProductController::class);
+        Route::resource('product-variant/color', ProductColorController::class);
+        Route::resource('product-variant/size', ProductSizeController::class);
     });

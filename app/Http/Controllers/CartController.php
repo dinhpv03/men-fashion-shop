@@ -7,6 +7,7 @@ use App\Http\Requests\StoreCartRequest;
 use App\Http\Requests\UpdateCartRequest;
 use App\Models\Product;
 use App\Models\ProductVariant;
+use Illuminate\Support\Facades\Request;
 
 class CartController extends Controller
 {
@@ -14,10 +15,9 @@ class CartController extends Controller
      * Display a listing of the resource.
      */
 
-    public function list() {
-
-//        dd(session('cart'));
-        $cart = session('cart');
+    public function list()
+    {
+        $cart = session('cart', []);
 
         $totalAmount = 0;
         foreach ($cart as $item) {
@@ -26,7 +26,6 @@ class CartController extends Controller
 
         return view('cart', compact('totalAmount'));
     }
-
 
     public function add()
     {
@@ -41,19 +40,29 @@ class CartController extends Controller
             ->firstOrFail();
 
         if (!isset( session('cart')[$productVariant->id] ) ) {
-            $data = $product->toArray()
-                + $productVariant->toArray()
-                + ['quantity' => \request('quantity')];
-
-            session()->put('cart.' . $productVariant->id,  $data);
+            $data = $product->toArray() + $productVariant->toArray() + ['quantity' => \request('quantity')];
+            session()->put('cart.' . $productVariant->id, $data);
         } else {
             $data = session('cart')[$productVariant->id];
             $data['quantity'] = \request('quantity');
 
             session()->put('cart.' . $productVariant->id,  $data);
         }
-
         return redirect()->route('cart.list');
+    }
+    public function remove($id)
+    {
+        try {
+            $cart = session()->get('cart', []);
+
+            if(isset($cart[$id])) {
+                unset($cart[$id]);
+                session()->put('cart', $cart);
+            }
+            return redirect()->back()->with('success', 'Sản phẩm đã được xóa khỏi giỏ hàng.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Có lỗi xảy ra khi xóa sản phẩm khỏi giỏ hàng.');
+        }
     }
 
 }

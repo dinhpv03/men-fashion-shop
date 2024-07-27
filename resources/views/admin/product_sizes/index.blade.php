@@ -3,30 +3,28 @@
 @section('title', 'Danh sách Sản phẩm')
 
 @section('content')
-    <!-- start page title -->
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                <h4 class="mb-sm-0">Danh sách Sản phẩm</h4>
+                <h4 class="mb-sm-0">Danh sách kích cỡ</h4>
 
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">Tables</a></li>
-                        <li class="breadcrumb-item active">Danh sách Sản phẩm</li>
+                        <li class="breadcrumb-item active">Danh sách kích cỡ</li>
                     </ol>
                 </div>
 
             </div>
         </div>
     </div>
-    <!-- end page title -->
 
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header d-flex justify-content-between">
                     <h5 class="card-title mb-0">Danh sách</h5>
-                    <a href="{{ route('admin.products.create') }}" class="btn btn-primary mb-3">Thêm mới</a>
+                    <a href="{{ route('admin.size.create') }}" class="btn btn-primary mb-3">Thêm mới</a>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -34,19 +32,7 @@
                             <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Img Thumbnail</th>
                                 <th>Name</th>
-                                <th>SKU</th>
-                                <th>Catalogue</th>
-                                <th>Price Regular</th>
-                                <th>Price Sale</th>
-                                <th>Views</th>
-                                <th>Is Active</th>
-                                <th>Is Hot Deal</th>
-                                <th>Is Good Deal</th>
-                                <th>Is New</th>
-                                <th>Is Show Home</th>
-                                <th>Tags</th>
                                 <th>Created at</th>
                                 <th>Updated at</th>
                                 <th>Action</th>
@@ -56,38 +42,14 @@
                             @foreach($data as $item)
                                 <tr>
                                     <td>{{ $item->id }}</td>
-                                    <td>
-                                        @php
-                                            $url = $item->img_thumbnail;
-                                            if (!Str::contains($url, 'http')) {
-                                                $url = Storage::url($url);
-                                            }
-                                        @endphp
-                                        <img src="{{ $url }}" alt="" width="100px">
-                                    </td>
                                     <td>{{ $item->name }}</td>
-                                    <td>{{ $item->sku }}</td>
-                                    <td>{{ $item->catalogue ? $item->catalogue->name : 'No Catalogue' }}</td>
-                                    <td>{{ $item->price_regular }}</td>
-                                    <td>{{ $item->price_sale }}</td>
-                                    <td>{{ $item->views }}</td>
-                                    <td>{!! $item->is_active ? '<span class="badge bg-primary">YES</span>' : '<span class="badge bg-danger">NO</span>' !!}</td>
-                                    <td>{!! $item->is_hot_deal ? '<span class="badge bg-primary">YES</span>' : '<span class="badge bg-danger">NO</span>' !!}</td>
-                                    <td>{!! $item->is_good_deal ? '<span class="badge bg-primary">YES</span>' : '<span class="badge bg-danger">NO</span>' !!}</td>
-                                    <td>{!! $item->is_new ? '<span class="badge bg-primary">YES</span>' : '<span class="badge bg-danger">NO</span>' !!}</td>
-                                    <td>{!! $item->is_show_home ? '<span class="badge bg-primary">YES</span>' : '<span class="badge bg-danger">NO</span>' !!}</td>
-                                    <td>
-                                        @foreach($item->tags as $tag)
-                                            <span class="badge bg-info">{{ $tag->name }}</span>
-                                        @endforeach
-                                    </td>
                                     <td>{{ $item->created_at }}</td>
                                     <td>{{ $item->updated_at }}</td>
                                     <td>
                                         <div class="d-flex gap-2">
-                                            <a href="{{ route('admin.products.show', $item) }}" class="btn btn-info btn-sm">Show</a>
-                                            <a href="{{ route('admin.products.edit', $item) }}" class="btn btn-primary btn-sm">Edit</a>
-                                            <form action="{{ route('admin.products.destroy', $item) }}" method="post">
+                                            <a href="{{ route('admin.size.show', $item) }}" class="btn btn-info btn-sm">Show</a>
+                                            <a href="{{ route('admin.size.edit', $item) }}" class="btn btn-primary btn-sm">Edit</a>
+                                            <form action="{{ route('admin.size.destroy', $item) }}" method="post">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button onclick="return confirm('Chắc chắn không?')" type="submit" class="btn btn-danger btn-sm">Delete</button>
@@ -98,12 +60,11 @@
                             @endforeach
                             </tbody>
                         </table>
-                        {{ $data->links() }}
                     </div>
                 </div>
             </div>
         </div>
-    </div><!-- end row -->
+    </div>
 @endsection
 
 @section('style-libs')

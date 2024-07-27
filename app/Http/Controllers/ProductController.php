@@ -16,8 +16,6 @@ class ProductController extends Controller
         $colors = ProductColor::query()->pluck('name', 'id')->all();
         $sizes = ProductSize::query()->pluck('name', 'id')->all();
 
-//        dd($product->galleries);
-
         return view('product-detail', compact('product', 'colors', 'sizes'));
     }
 }

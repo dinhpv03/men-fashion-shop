@@ -89,7 +89,7 @@ class ProductController extends Controller
                 Storage::delete($dataProduct['img_thumbnail']);
             }
 
-            // $dataHasImage = $dataProductVariants + $dataProductGalleries;
+
             foreach ($dataProductVariants as $item) {
                 if (!empty($item['image']) && Storage::exists($item['image'])) {
                     Storage::delete($item['image']);
@@ -111,8 +111,14 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
+        $product->load(['variants', 'galleries', 'tags']);
+
+        $colors = ProductColor::query()->pluck('name', 'id')->all();
+        $sizes = ProductSize::query()->pluck('name', 'id')->all();
+
+        return view(self::PATH_VIEW . __FUNCTION__, compact('product', 'colors', 'sizes'));
     }
+
 
     /**
      * Show the form for editing the specified resource.
